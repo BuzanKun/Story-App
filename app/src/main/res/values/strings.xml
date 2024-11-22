@@ -19,4 +19,6 @@
     <string name="input_your_password">Input Your Password</string>
     <string name="input_your_name">Input Your Name</string>
     <string name="welcome_image">Welcome Image</string>
+    <string name="error_email_invalid">Invalid email format</string>
+    <string name="error_password_invalid">Password must be at least 8 characters</string>
 </resources>

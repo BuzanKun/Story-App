@@ -80,10 +80,10 @@
         app:startIconDrawable="@drawable/ic_baseline_email_24"
         tools:alpha="100">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.dicoding.picodiploma.storyapp.data.customview.MyEmailEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:ems="10"
             android:inputType="textEmailAddress"
             android:hint="@string/input_your_email"/>
@@ -117,9 +117,9 @@
         app:startIconDrawable="@drawable/ic_baseline_lock_24"
         tools:alpha="100">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.dicoding.picodiploma.storyapp.data.customview.MyPasswordEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:ems="10"
             android:inputType="textPassword"
             android:hint="@string/input_your_password"/>
