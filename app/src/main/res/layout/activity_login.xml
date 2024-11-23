@@ -80,7 +80,7 @@
         app:startIconDrawable="@drawable/ic_baseline_email_24"
         tools:alpha="100">
 
-        <com.dicoding.picodiploma.storyapp.data.customview.MyEmailEditText
+        <com.dicoding.picodiploma.storyapp.customview.MyEmailEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -117,7 +117,8 @@
         app:startIconDrawable="@drawable/ic_baseline_lock_24"
         tools:alpha="100">
 
-        <com.dicoding.picodiploma.storyapp.data.customview.MyPasswordEditText
+        <com.dicoding.picodiploma.storyapp.customview.MyPasswordEditText
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
@@ -132,13 +133,12 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:alpha="0"
-        android:backgroundTint="@color/navy"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"
-        tools:alpha="100" />
+        tools:alpha="100"
+        android:enabled="false"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontal"

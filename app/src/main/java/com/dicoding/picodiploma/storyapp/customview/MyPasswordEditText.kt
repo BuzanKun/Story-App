@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.storyapp.data.customview
+package com.dicoding.picodiploma.storyapp.customview
 
 import android.content.Context
 import android.util.AttributeSet
@@ -19,5 +19,13 @@ class MyPasswordEditText @JvmOverloads constructor(
         } else {
             setError(null, null)
         }
+    }
+
+    fun getInput(): String {
+        return text?.toString() ?: ""
+    }
+
+    fun isValid(): Boolean {
+        return getInput().length >= 8
     }
 }
