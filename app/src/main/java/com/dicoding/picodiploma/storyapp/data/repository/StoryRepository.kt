@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.data.remote.response.ListStoryItem
+import com.dicoding.picodiploma.storyapp.data.remote.response.Story
 import com.dicoding.picodiploma.storyapp.data.remote.retrofit.ApiService
 
 class StoryRepository private constructor(
@@ -16,6 +17,20 @@ class StoryRepository private constructor(
             val response = apiService.getStories()
             val storiesData = response.listStory
             emit(Result.Success(storiesData))
+        } catch (e: Exception) {
+            Log.e("StoryRepository", "getStories: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun getStoryById(id: String): LiveData<Result<Story>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getStoryById(id)
+            val storyData = response.story
+            if (storyData != null) {
+                emit(Result.Success(storyData))
+            }
         } catch (e: Exception) {
             Log.e("StoryRepository", "getStories: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))

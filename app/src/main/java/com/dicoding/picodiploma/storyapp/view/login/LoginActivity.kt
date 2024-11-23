@@ -82,7 +82,8 @@ class LoginActivity : AppCompatActivity() {
                         .setMessage("Login Success")
                         .setPositiveButton("OK") { _, _ ->
                             val intent = Intent(this, MainActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(intent)
                             finish()
                         }
@@ -99,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
                         .create()
                         .show()
                 }
+
                 Result.Loading -> TODO()
             }
         }

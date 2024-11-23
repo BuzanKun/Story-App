@@ -22,4 +22,10 @@
     <string name="story_username">Username: %1$s</string>
     <string name="story_description">Description: %1$s</string>
     <string name="add_a_new_story">Add a New Story</string>
+    <string name="name_of_the_user">Name of the User</string>
+    <string name="username">Username :</string>
+    <string name="description">Description :</string>
+    <string name="created_at">Created At :</string>
+    <string name="the_time_when_the_story_created">The Time when the Story Created</string>
+    <string name="description_of_the_story">Description of the Story</string>
 </resources>
