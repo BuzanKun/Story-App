@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.storyapp.data.pref
+package com.dicoding.picodiploma.storyapp.data.local.pref
 
 import android.content.Context
 import androidx.datastore.core.DataStore

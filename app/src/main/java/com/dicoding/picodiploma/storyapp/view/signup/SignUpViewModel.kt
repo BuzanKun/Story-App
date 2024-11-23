@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dicoding.picodiploma.storyapp.data.Result
-import com.dicoding.picodiploma.storyapp.data.UserRepository
 import com.dicoding.picodiploma.storyapp.data.remote.response.RegisterResponse
+import com.dicoding.picodiploma.storyapp.data.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(private val repository: UserRepository) : ViewModel() {

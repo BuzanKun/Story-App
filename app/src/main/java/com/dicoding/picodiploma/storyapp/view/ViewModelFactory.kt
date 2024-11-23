@@ -3,28 +3,32 @@ package com.dicoding.picodiploma.storyapp.view
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.picodiploma.storyapp.data.UserRepository
+import com.dicoding.picodiploma.storyapp.data.repository.StoryRepository
+import com.dicoding.picodiploma.storyapp.data.repository.UserRepository
 import com.dicoding.picodiploma.storyapp.di.Injection
 import com.dicoding.picodiploma.storyapp.view.login.LoginViewModel
 import com.dicoding.picodiploma.storyapp.view.main.MainViewModel
 import com.dicoding.picodiploma.storyapp.view.signup.SignUpViewModel
 
-class ViewModelFactory(private val repository: UserRepository) :
+class ViewModelFactory(
+    private val userRepository: UserRepository,
+    private val storyRepository: StoryRepository
+) :
     ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(repository) as T
+                MainViewModel(userRepository, storyRepository) as T
             }
 
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(repository) as T
+                LoginViewModel(userRepository) as T
             }
 
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
-                SignUpViewModel(repository) as T
+                SignUpViewModel(userRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
@@ -39,7 +43,8 @@ class ViewModelFactory(private val repository: UserRepository) :
         fun getInstance(context: Context): ViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(Injection.provideRepository(context))
+                    val (userRepository, storyRepository) = Injection.provideRepository(context)
+                    INSTANCE = ViewModelFactory(userRepository, storyRepository)
                 }
             }
             return INSTANCE as ViewModelFactory

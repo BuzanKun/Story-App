@@ -10,9 +10,6 @@
     <string name="message_login_page">Sign in to your account</string>
     <string name="title_login_page">Ready to share your stories?</string>
     <string name="name">Name</string>
-    <string name="message_main_page">Happy Story Sharing!</string>
-    <string name="logout">Log Out</string>
-    <string name="dicoding_image">Dicoding Image</string>
     <string name="login_image">Login Image</string>
     <string name="input_your_email">Input Your Email</string>
     <string name="register_image">Register Image</string>
@@ -21,4 +18,8 @@
     <string name="welcome_image">Welcome Image</string>
     <string name="error_email_invalid">Invalid email format</string>
     <string name="error_password_invalid">Password must be at least 8 characters</string>
+    <string name="story_image">Story Image</string>
+    <string name="story_username">Username: %1$s</string>
+    <string name="story_description">Description: %1$s</string>
+    <string name="add_a_new_story">Add a New Story</string>
 </resources>

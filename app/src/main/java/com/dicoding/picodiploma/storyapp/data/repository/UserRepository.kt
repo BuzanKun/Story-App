@@ -1,7 +1,8 @@
-package com.dicoding.picodiploma.storyapp.data
+package com.dicoding.picodiploma.storyapp.data.repository
 
-import com.dicoding.picodiploma.storyapp.data.pref.UserModel
-import com.dicoding.picodiploma.storyapp.data.pref.UserPreference
+import com.dicoding.picodiploma.storyapp.data.Result
+import com.dicoding.picodiploma.storyapp.data.local.pref.UserModel
+import com.dicoding.picodiploma.storyapp.data.local.pref.UserPreference
 import com.dicoding.picodiploma.storyapp.data.remote.response.ErrorResponse
 import com.dicoding.picodiploma.storyapp.data.remote.response.RegisterResponse
 import com.dicoding.picodiploma.storyapp.data.remote.retrofit.ApiService

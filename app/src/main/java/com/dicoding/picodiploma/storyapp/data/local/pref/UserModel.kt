@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.storyapp.data.pref
+package com.dicoding.picodiploma.storyapp.data.local.pref
 
 data class UserModel(
     val email: String,

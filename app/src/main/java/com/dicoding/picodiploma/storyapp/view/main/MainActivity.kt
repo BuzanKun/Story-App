@@ -1,25 +1,32 @@
 package com.dicoding.picodiploma.storyapp.view.main
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
 import com.dicoding.picodiploma.storyapp.view.welcome.WelcomeActivity
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel by viewModels<MainViewModel> {
+    private lateinit var binding: ActivityMainBinding
+    private val factory by lazy {
         ViewModelFactory.getInstance(this)
     }
-    private lateinit var binding: ActivityMainBinding
-
+    private val viewModel: MainViewModel by viewModels {
+        factory
+    }
+    private val storyAdapter = StoryAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,7 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         setupView()
         setupAction()
-        playAnimation()
     }
 
     private fun setupView() {
@@ -47,30 +53,56 @@ class MainActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        supportActionBar?.hide()
-    }
 
-    private fun setupAction() {
-        binding.logoutButton.setOnClickListener {
-            viewModel.logout()
+        viewModel.getStories().observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        Log.d(" Loading", "Loading")
+                        binding.progressBar.visibility = View.VISIBLE
+                        var progress = 0
+                        val handler = Handler(Looper.getMainLooper())
+                        handler.postDelayed(object : Runnable {
+                            override fun run() {
+                                progress += 10
+                                if (progress <= 100) {
+                                    binding.progressBar.progress = progress
+                                    handler.postDelayed(this, 100) // Update every 300ms
+                                }
+                            }
+                        }, 100)
+                    }
+
+                    is Result.Success -> {
+                        Log.d("SUCCESS", "Success")
+                        binding.progressBar.visibility = View.GONE
+                        val newsData = result.data
+                        storyAdapter.submitList(newsData)
+                        binding.rvStoryList.apply {
+                            layoutManager = LinearLayoutManager(context)
+                            setHasFixedSize(true)
+                            adapter = storyAdapter
+                        }
+                    }
+
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        Snackbar.make(
+                            binding.root,
+                            "Error Occurred: ${result.error}",
+                            Snackbar.LENGTH_SHORT
+                        ).setAction("Dismiss") {
+                        }.show()
+                    }
+                }
+            }
         }
     }
 
-    private fun playAnimation() {
-        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
-            duration = 6000
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.REVERSE
-        }.start()
-
-        val name = ObjectAnimator.ofFloat(binding.nameTextView, View.ALPHA, 1f).setDuration(100)
-        val message =
-            ObjectAnimator.ofFloat(binding.messageTextView, View.ALPHA, 1f).setDuration(100)
-        val logout = ObjectAnimator.ofFloat(binding.logoutButton, View.ALPHA, 1f).setDuration(100)
-
-        AnimatorSet().apply {
-            playSequentially(name, message, logout)
-            startDelay = 100
-        }.start()
+    private fun setupAction() {
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(this, AddStoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
