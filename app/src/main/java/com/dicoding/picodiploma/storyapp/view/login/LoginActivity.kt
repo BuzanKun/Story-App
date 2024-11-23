@@ -11,6 +11,7 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.dicoding.picodiploma.storyapp.data.pref.UserModel
 import com.dicoding.picodiploma.storyapp.databinding.ActivityLoginBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
@@ -46,6 +47,21 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
+        val emailField = binding.emailEditText
+        val passwordField = binding.passwordEditText
+
+        val updateButtonState = {
+            binding.loginButton.isEnabled = emailField.isValid() && passwordField.isValid()
+        }
+
+        binding.emailEditText.addTextChangedListener {
+            updateButtonState()
+        }
+
+        binding.passwordEditText.addTextChangedListener {
+            updateButtonState()
+        }
+
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             viewModel.saveSession(UserModel(email, "sample_token"))

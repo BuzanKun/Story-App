@@ -9,6 +9,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.dicoding.picodiploma.storyapp.databinding.ActivitySignupBinding
 
 class SignupActivity : AppCompatActivity() {
@@ -38,9 +39,25 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding.signupButton.setOnClickListener {
-            val email = binding.emailEditText.text.toString()
+        val emailField = binding.emailEditText
+        val passwordField = binding.passwordEditText
 
+        val updateButtonState = {
+            binding.signupButton.isEnabled = emailField.isValid() && passwordField.isValid()
+        }
+
+        binding.emailEditText.addTextChangedListener {
+            updateButtonState()
+        }
+
+        binding.passwordEditText.addTextChangedListener {
+            updateButtonState()
+        }
+
+        binding.signupButton.setOnClickListener {
+            val email = binding.emailEditText.getInput()
+            val password = binding.passwordEditText.getInput()
+            
             AlertDialog.Builder(this).apply {
                 setTitle("Yeah!")
                 setMessage("Akun dengan $email sudah jadi nih. Yuk, login dan belajar coding.")
