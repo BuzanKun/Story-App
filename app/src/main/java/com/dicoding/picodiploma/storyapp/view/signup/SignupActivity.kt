@@ -7,13 +7,21 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivitySignupBinding
+import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
+
+    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    private val viewModel: SignUpViewModel by viewModels {
+        factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +29,7 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupView()
+        setupObservers()
         setupAction()
         playAnimation()
     }
@@ -38,7 +47,42 @@ class SignupActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
+    private fun setupObservers() {
+        viewModel.registerStatus.observe(this) { result ->
+            when (result) {
+                is Result.Success -> {
+                    AlertDialog.Builder(this)
+                        .setTitle("Success")
+                        .setMessage("Registration Successful")
+                        .setPositiveButton("OK") { _, _ ->
+                            finish()
+                        }
+                        .create()
+                        .show()
+                }
+
+                is Result.Error -> {
+                    AlertDialog.Builder(this)
+                        .setTitle("Failed")
+                        .setMessage(result.error)
+                        .setPositiveButton("OK") { _, _ ->
+                            finish()
+                        }
+                        .create()
+                        .show()
+                }
+
+                Result.Loading -> TODO()
+            }
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+    }
+
     private fun setupAction() {
+
         val emailField = binding.emailEditText
         val passwordField = binding.passwordEditText
 
@@ -55,18 +99,11 @@ class SignupActivity : AppCompatActivity() {
         }
 
         binding.signupButton.setOnClickListener {
+            val name = binding.nameEditText.text.toString()
             val email = binding.emailEditText.getInput()
             val password = binding.passwordEditText.getInput()
-            
-            AlertDialog.Builder(this).apply {
-                setTitle("Yeah!")
-                setMessage("Akun dengan $email sudah jadi nih. Yuk, login dan belajar coding.")
-                setPositiveButton("Lanjut") { _, _ ->
-                    finish()
-                }
-                create()
-                show()
-            }
+
+            viewModel.registerUser(name, email, password)
         }
     }
 
