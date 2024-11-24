@@ -42,11 +42,11 @@ class AddStoryActivity : AppCompatActivity() {
     private val pickImage =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                Log.d("Photo Picker", "Selected Image Uri: $uri")
+                Log.d(getString(R.string.photo_picker), getString(R.string.selected_image_uri, uri))
                 currentImageUri = uri
                 showImage()
             } else {
-                Log.e("Photo Picker", "No Image Selected")
+                Log.e(getString(R.string.photo_picker), getString(R.string.no_image_selected))
             }
         }
 
@@ -79,7 +79,7 @@ class AddStoryActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        supportActionBar?.title = "Add Story"
+        supportActionBar?.title = getString(R.string.add_story)
     }
 
     private fun setupAction() {
@@ -100,7 +100,7 @@ class AddStoryActivity : AppCompatActivity() {
     private fun uploadStory() {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
-            Log.d("Image File", "showImage: ${imageFile.path}")
+            Log.d(getString(R.string.image_file), getString(R.string.showimage, imageFile.path))
             val description = binding?.etDescription?.text.toString()
 
             val requestBody = description.toRequestBody("text/plain".toMediaType())
@@ -124,9 +124,9 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun showImageNull(message: String) {
         AlertDialog.Builder(this)
-            .setTitle("Upload Error")
+            .setTitle(getString(R.string.upload_error))
             .setMessage(message)
-            .setPositiveButton("OK") { _, _ ->
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
             }
             .create()
             .show()
@@ -137,9 +137,9 @@ class AddStoryActivity : AppCompatActivity() {
             when (result) {
                 is Result.Success -> {
                     AlertDialog.Builder(this)
-                        .setTitle("Success")
-                        .setMessage("Upload Success")
-                        .setPositiveButton("OK") { _, _ ->
+                        .setTitle(getString(R.string.success))
+                        .setMessage(getString(R.string.upload_success))
+                        .setPositiveButton(getString(R.string.ok)) { _, _ ->
                             val intent = Intent(this, MainActivity::class.java)
                             intent.flags =
                                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -152,9 +152,9 @@ class AddStoryActivity : AppCompatActivity() {
 
                 is Result.Error -> {
                     AlertDialog.Builder(this)
-                        .setTitle("Failed")
+                        .setTitle(getString(R.string.failed))
                         .setMessage(result.error)
-                        .setPositiveButton("Retry") { _, _ ->
+                        .setPositiveButton(getString(R.string.retry)) { _, _ ->
                         }
                         .create()
                         .show()

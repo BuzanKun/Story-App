@@ -96,9 +96,9 @@ class MainActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
                         Snackbar.make(
                             binding.root,
-                            "Error Occurred: ${result.error}",
+                            getString(R.string.error_occurred, result.error),
                             Snackbar.LENGTH_SHORT
-                        ).setAction("Dismiss") {
+                        ).setAction(getString(R.string.dismiss)) {
                         }.show()
                     }
                 }

@@ -18,10 +18,10 @@ class UserRepository private constructor(
         name: String,
         email: String,
         password: String
-    ): Result<RegisterResponse> { // Return type is still Result<RegisterResponse>
+    ): Result<RegisterResponse> {
         return try {
             val response = apiService.register(name, email, password)
-            Result.Success(response) // Pass the full response on success
+            Result.Success(response)
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)

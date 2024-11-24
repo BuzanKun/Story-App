@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivityLoginBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
@@ -78,9 +79,9 @@ class LoginActivity : AppCompatActivity() {
             when (result) {
                 is Result.Success -> {
                     AlertDialog.Builder(this)
-                        .setTitle("Success")
-                        .setMessage("Login Success")
-                        .setPositiveButton("OK") { _, _ ->
+                        .setTitle(getString(R.string.success))
+                        .setMessage(getString(R.string.login_success))
+                        .setPositiveButton(getString(R.string.ok)) { _, _ ->
                             val intent = Intent(this, MainActivity::class.java)
                             intent.flags =
                                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -93,9 +94,9 @@ class LoginActivity : AppCompatActivity() {
 
                 is Result.Error -> {
                     AlertDialog.Builder(this)
-                        .setTitle("Failed")
+                        .setTitle(getString(R.string.failed))
                         .setMessage(result.error)
-                        .setPositiveButton("Retry") { _, _ ->
+                        .setPositiveButton(getString(R.string.retry)) { _, _ ->
                         }
                         .create()
                         .show()

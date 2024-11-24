@@ -34,4 +34,21 @@
     <string name="gallery">Gallery</string>
     <string name="upload">Upload</string>
     <string name="image_null_error">No Image Detected, Pick an Image First</string>
+    <string name="add_story">Add Story</string>
+    <string name="selected_image_uri">Selected Image Uri: %1$s</string>
+    <string name="no_image_selected">No Image Selected</string>
+    <string name="photo_picker">Photo Picker</string>
+    <string name="image_file">Image File</string>
+    <string name="showimage">showImage: %1$s</string>
+    <string name="upload_error">Upload Error</string>
+    <string name="ok">OK</string>
+    <string name="success">Success</string>
+    <string name="upload_success">Upload Success</string>
+    <string name="failed">Failed</string>
+    <string name="retry">Retry</string>
+    <string name="story_detail">Story Detail</string>
+    <string name="error_occurred">Error Occurred: %1$s</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="login_success">Login Success</string>
+    <string name="registration_successful">Registration Successful</string>
 </resources>

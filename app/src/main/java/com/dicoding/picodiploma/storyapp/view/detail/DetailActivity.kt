@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivityDetailBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
@@ -44,7 +45,7 @@ class DetailActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        supportActionBar?.title = "Story Detail"
+        supportActionBar?.title = getString(R.string.story_detail)
     }
 
     private fun setupObservers() {
@@ -76,9 +77,9 @@ class DetailActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.GONE
                             Snackbar.make(
                                 binding.root,
-                                "Error Occurred: ${result.error}",
+                                getString(R.string.error_occurred, result.error),
                                 Snackbar.LENGTH_SHORT
-                            ).setAction("Dismiss") {
+                            ).setAction(getString(R.string.dismiss)) {
                             }.show()
                         }
                     }

@@ -21,7 +21,7 @@ class SignUpViewModel(private val repository: UserRepository) : ViewModel() {
         viewModelScope.launch {
             val result = repository.registerUser(name, email, password)
             _isLoading.value = false
-            _registerStatus.value = result // Result.Success or Result.Error
+            _registerStatus.value = result
         }
     }
 }
