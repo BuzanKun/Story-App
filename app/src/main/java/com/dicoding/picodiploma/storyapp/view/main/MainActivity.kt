@@ -18,6 +18,7 @@ import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
+import com.dicoding.picodiploma.storyapp.view.add.AddStoryActivity
 import com.dicoding.picodiploma.storyapp.view.welcome.WelcomeActivity
 import com.google.android.material.snackbar.Snackbar
 

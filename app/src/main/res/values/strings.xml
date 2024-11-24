@@ -29,4 +29,9 @@
     <string name="the_time_when_the_story_created">The Time when the Story Created</string>
     <string name="description_of_the_story">Description of the Story</string>
     <string name="logout">Logout</string>
+    <string name="image_to_upload">Image to Upload</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="image_null_error">No Image Detected, Pick an Image First</string>
 </resources>

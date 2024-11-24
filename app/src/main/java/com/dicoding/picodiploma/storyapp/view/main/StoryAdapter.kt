@@ -25,7 +25,7 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_
             binding.tvStoryName.text =
                 binding.root.context.getString(R.string.story_username, story.name)
             binding.tvStoryDescription.text =
-                binding.root.context.getString(R.string.story_description, story.name)
+                binding.root.context.getString(R.string.story_description, story.description)
 
             val optionsCompat: ActivityOptionsCompat =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
