@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivityAddStoryBinding
+import com.dicoding.picodiploma.storyapp.utils.getImageUri
 import com.dicoding.picodiploma.storyapp.utils.reduceFileImage
 import com.dicoding.picodiploma.storyapp.utils.uriToFile
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
@@ -43,12 +44,18 @@ class AddStoryActivity : AppCompatActivity() {
             if (uri != null) {
                 Log.d("Photo Picker", "Selected Image Uri: $uri")
                 currentImageUri = uri
-                currentImageUri?.let {
-                    binding?.ivStoryImage?.setImageURI(null)
-                    binding?.ivStoryImage?.setImageURI(it)
-                }
+                showImage()
             } else {
                 Log.e("Photo Picker", "No Image Selected")
+            }
+        }
+
+    private val intentCamera =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (isSuccess) {
+                showImage()
+            } else {
+                currentImageUri = null
             }
         }
 
@@ -80,6 +87,11 @@ class AddStoryActivity : AppCompatActivity() {
             pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
+        binding?.btnCamera?.setOnClickListener {
+            currentImageUri = getImageUri(this)
+            intentCamera.launch(currentImageUri!!)
+        }
+
         binding?.btnUpload?.setOnClickListener {
             uploadStory()
         }
@@ -101,6 +113,13 @@ class AddStoryActivity : AppCompatActivity() {
 
             viewModel.uploadStory(multipartBody, requestBody)
         } ?: showImageNull(getString(R.string.image_null_error))
+    }
+
+    private fun showImage() {
+        currentImageUri?.let {
+            binding?.ivStoryImage?.setImageURI(null)
+            binding?.ivStoryImage?.setImageURI(it)
+        }
     }
 
     private fun showImageNull(message: String) {
