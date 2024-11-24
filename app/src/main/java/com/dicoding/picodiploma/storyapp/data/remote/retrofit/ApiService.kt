@@ -2,7 +2,6 @@ package com.dicoding.picodiploma.storyapp.data.remote.retrofit
 
 import com.dicoding.picodiploma.storyapp.data.remote.response.LoginResponse
 import com.dicoding.picodiploma.storyapp.data.remote.response.RegisterResponse
-import com.dicoding.picodiploma.storyapp.data.remote.response.StoryDetailResponse
 import com.dicoding.picodiploma.storyapp.data.remote.response.StoryResponse
 import com.dicoding.picodiploma.storyapp.data.remote.response.UploadResponse
 import okhttp3.MultipartBody
@@ -13,7 +12,6 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
-import retrofit2.http.Path
 
 interface ApiService {
     @FormUrlEncoded
@@ -33,11 +31,6 @@ interface ApiService {
 
     @GET("stories")
     suspend fun getStories(): StoryResponse
-
-    @GET("stories/{id}")
-    suspend fun getStoryById(
-        @Path("id") id: String
-    ): StoryDetailResponse
 
     @Multipart
     @POST("stories")

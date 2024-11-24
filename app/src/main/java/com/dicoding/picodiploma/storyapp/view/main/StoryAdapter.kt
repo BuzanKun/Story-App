@@ -37,7 +37,7 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailActivity::class.java)
-                intent.putExtra("id", story.id)
+                intent.putExtra("story", story)
                 itemView.context.startActivity(intent, optionsCompat.toBundle())
             }
         }

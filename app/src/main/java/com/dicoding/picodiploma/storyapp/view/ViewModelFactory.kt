@@ -7,7 +7,6 @@ import com.dicoding.picodiploma.storyapp.data.repository.StoryRepository
 import com.dicoding.picodiploma.storyapp.data.repository.UserRepository
 import com.dicoding.picodiploma.storyapp.di.Injection
 import com.dicoding.picodiploma.storyapp.view.add.AddStoryViewModel
-import com.dicoding.picodiploma.storyapp.view.detail.DetailViewModel
 import com.dicoding.picodiploma.storyapp.view.login.LoginViewModel
 import com.dicoding.picodiploma.storyapp.view.main.MainViewModel
 import com.dicoding.picodiploma.storyapp.view.signup.SignUpViewModel
@@ -31,10 +30,6 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
                 SignUpViewModel(userRepository) as T
-            }
-
-            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
-                DetailViewModel(storyRepository) as T
             }
 
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
