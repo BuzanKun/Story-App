@@ -70,8 +70,6 @@ class DetailActivity : AppCompatActivity() {
                                 .into(binding.ivStoryImage)
                             binding.tvStoryName.text = storyData.name
                             binding.tvStoryDescription.text = storyData.description
-                            binding.tvStoryTimecreated.text = storyData.createdAt
-
                         }
 
                         is Result.Error -> {

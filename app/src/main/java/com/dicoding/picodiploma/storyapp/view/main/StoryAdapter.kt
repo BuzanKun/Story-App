@@ -1,8 +1,11 @@
 package com.dicoding.picodiploma.storyapp.view.main
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +26,20 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_
                 binding.root.context.getString(R.string.story_username, story.name)
             binding.tvStoryDescription.text =
                 binding.root.context.getString(R.string.story_description, story.name)
+
+            val optionsCompat: ActivityOptionsCompat =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    itemView.context as Activity,
+                    Pair(binding.ivStoryImage, "storyImage"),
+                    Pair(binding.tvStoryName, "storyName"),
+                    Pair(binding.tvStoryDescription, "storyDescription")
+                )
+
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, DetailActivity::class.java)
+                intent.putExtra("id", story.id)
+                itemView.context.startActivity(intent, optionsCompat.toBundle())
+            }
         }
     }
 
@@ -34,12 +51,6 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val story = getItem(position)
         holder.bind(story)
-
-        holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("id", story.id)
-            holder.itemView.context.startActivity(intent)
-        }
     }
 
     companion object {
