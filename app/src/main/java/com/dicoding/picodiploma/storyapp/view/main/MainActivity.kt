@@ -13,6 +13,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.Result
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                         val newsData = result.data
                         storyAdapter.submitList(newsData)
                         binding.rvStoryList.apply {
-                            layoutManager = LinearLayoutManager(context)
+                            layoutManager = GridLayoutManager(context, 2)
                             setHasFixedSize(true)
                             adapter = storyAdapter
                         }
