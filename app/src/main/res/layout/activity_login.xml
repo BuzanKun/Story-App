@@ -78,7 +78,7 @@
         tools:alpha="100">
 
         <com.dicoding.picodiploma.storyapp.customview.MyEmailEditText
-            android:id="@+id/emailEditText"
+            android:id="@+id/ed_login_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
@@ -114,7 +114,7 @@
         tools:alpha="100">
 
         <com.dicoding.picodiploma.storyapp.customview.MyPasswordEditText
-            android:id="@+id/passwordEditText"
+            android:id="@+id/ed_login_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"

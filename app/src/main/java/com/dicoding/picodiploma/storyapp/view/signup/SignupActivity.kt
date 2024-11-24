@@ -66,8 +66,7 @@ class SignupActivity : AppCompatActivity() {
                     AlertDialog.Builder(this)
                         .setTitle(getString(R.string.failed))
                         .setMessage(result.error)
-                        .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                            finish()
+                        .setPositiveButton(getString(R.string.retry)) { _, _ ->
                         }
                         .create()
                         .show()
@@ -84,25 +83,25 @@ class SignupActivity : AppCompatActivity() {
 
     private fun setupAction() {
 
-        val emailField = binding.emailEditText
-        val passwordField = binding.passwordEditText
+        val emailField = binding.edRegisterEmail
+        val passwordField = binding.edRegisterPassword
 
         val updateButtonState = {
             binding.signupButton.isEnabled = emailField.isValid() && passwordField.isValid()
         }
 
-        binding.emailEditText.addTextChangedListener {
+        binding.edRegisterEmail.addTextChangedListener {
             updateButtonState()
         }
 
-        binding.passwordEditText.addTextChangedListener {
+        binding.edRegisterPassword.addTextChangedListener {
             updateButtonState()
         }
 
         binding.signupButton.setOnClickListener {
-            val name = binding.nameEditText.text.toString()
-            val email = binding.emailEditText.getInput()
-            val password = binding.passwordEditText.getInput()
+            val name = binding.edRegisterName.text.toString()
+            val email = binding.edRegisterEmail.getInput()
+            val password = binding.edRegisterPassword.getInput()
 
             viewModel.registerUser(name, email, password)
         }

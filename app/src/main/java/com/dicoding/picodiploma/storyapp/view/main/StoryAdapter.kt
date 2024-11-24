@@ -21,18 +21,18 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_
         fun bind(story: ListStoryItem) {
             Glide.with(binding.root.context)
                 .load(story.photoUrl)
-                .into(binding.ivStoryImage)
-            binding.tvStoryName.text =
+                .into(binding.ivItemPhoto)
+            binding.tvItemName.text =
                 binding.root.context.getString(R.string.story_username, story.name)
-            binding.tvStoryDescription.text =
+            binding.tvItemDescription.text =
                 binding.root.context.getString(R.string.story_description, story.description)
 
             val optionsCompat: ActivityOptionsCompat =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
                     itemView.context as Activity,
-                    Pair(binding.ivStoryImage, "storyImage"),
-                    Pair(binding.tvStoryName, "storyName"),
-                    Pair(binding.tvStoryDescription, "storyDescription")
+                    Pair(binding.ivItemPhoto, "storyImage"),
+                    Pair(binding.tvItemName, "storyName"),
+                    Pair(binding.tvItemDescription, "storyDescription")
                 )
 
             itemView.setOnClickListener {

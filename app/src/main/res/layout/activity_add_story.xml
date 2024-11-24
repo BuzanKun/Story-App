@@ -48,19 +48,19 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_description"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_margin="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_upload">
+        app:layout_constraintBottom_toTopOf="@+id/button_add">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_description"
+            android:id="@+id/ed_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="@string/description"/>
     </com.google.android.material.textfield.TextInputLayout>
     <Button
-        android:id="@+id/btn_upload"
+        android:id="@+id/button_add"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="@string/upload"

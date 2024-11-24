@@ -68,9 +68,9 @@ class DetailActivity : AppCompatActivity() {
                             )
                             Glide.with(this@DetailActivity)
                                 .load(storyData.photoUrl)
-                                .into(binding.ivStoryImage)
-                            binding.tvStoryName.text = storyData.name
-                            binding.tvStoryDescription.text = storyData.description
+                                .into(binding.ivDetailPhoto)
+                            binding.tvDetailName.text = storyData.name
+                            binding.tvDetailDescription.text = storyData.description
                         }
 
                         is Result.Error -> {

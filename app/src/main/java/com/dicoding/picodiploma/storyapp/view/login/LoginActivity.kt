@@ -51,18 +51,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        val emailField = binding.emailEditText
-        val passwordField = binding.passwordEditText
+        val emailField = binding.edLoginEmail
+        val passwordField = binding.edLoginPassword
 
         val updateButtonState = {
             binding.loginButton.isEnabled = emailField.isValid() && passwordField.isValid()
         }
 
-        binding.emailEditText.addTextChangedListener {
+        binding.edLoginEmail.addTextChangedListener {
             updateButtonState()
         }
 
-        binding.passwordEditText.addTextChangedListener {
+        binding.edLoginPassword.addTextChangedListener {
             updateButtonState()
         }
 
