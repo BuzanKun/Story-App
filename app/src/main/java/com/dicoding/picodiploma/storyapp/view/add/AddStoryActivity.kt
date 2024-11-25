@@ -101,7 +101,7 @@ class AddStoryActivity : AppCompatActivity() {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
             Log.d(getString(R.string.image_file), getString(R.string.showimage, imageFile.path))
-            val description = binding?.edDescription?.text.toString()
+            val description = binding?.edAddDescription?.text.toString()
 
             val requestBody = description.toRequestBody("text/plain".toMediaType())
             val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())

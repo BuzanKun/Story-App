@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.logout -> {
+            R.id.action_logout -> {
                 viewModel.logout()
                 StoryWidget.notifyDataSetChanged(this)
             }
