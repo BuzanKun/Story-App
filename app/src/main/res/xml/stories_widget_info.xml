@@ -9,6 +9,6 @@
     android:updatePeriodMillis="0"
     android:previewLayout="@layout/story_widget"
     android:targetCellWidth="4"
-    android:targetCellHeight="2"
+    android:targetCellHeight="3"
     android:widgetCategory="home_screen"
     tools:targetApi="s" />

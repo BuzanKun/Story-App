@@ -1,25 +1,39 @@
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/widget_background"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:weightSum="1">
 
-    <StackView
-        android:id="@+id/list_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:loopViews="true"/>
+        android:layout_height="0dp"
+        android:layout_weight="0.8">
 
-    <TextView
-        android:id="@+id/empty_view"
+        <StackView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:loopViews="true" />
+
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/empty"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/button_widget"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:text="@string/empty"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="gone" />
-</FrameLayout>
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:text="@string/refresh" />
+</LinearLayout>

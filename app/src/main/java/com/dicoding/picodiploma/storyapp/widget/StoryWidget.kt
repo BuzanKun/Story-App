@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.storyapp.widget
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -9,18 +10,23 @@ import android.net.Uri
 import android.widget.RemoteViews
 import com.dicoding.picodiploma.storyapp.R
 
-/**
- * Implementation of App Widget functionality.
- */
+
 class StoryWidget : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
+        }
+    }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+
+        if (intent.action == "ACTION_WIDGET_BUTTON") {
+            notifyDataSetChanged(context)
         }
     }
 
@@ -37,6 +43,19 @@ class StoryWidget : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.story_widget)
             views.setRemoteAdapter(R.id.list_view, intent)
             views.setEmptyView(R.id.list_view, R.id.empty_view)
+
+            val buttonIntent = Intent(context, StoryWidget::class.java).apply {
+                action = "ACTION_WIDGET_BUTTON"
+            }
+
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                0,
+                buttonIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            views.setOnClickPendingIntent(R.id.button_widget, pendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }

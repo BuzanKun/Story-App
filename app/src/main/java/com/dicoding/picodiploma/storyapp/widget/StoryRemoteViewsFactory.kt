@@ -28,7 +28,6 @@ class StoryRemoteViewsFactory(private val context: Context) :
     }
 
     override fun onDataSetChanged() {
-        // Load stories from DataStore
         runBlocking(Dispatchers.IO) {
             val token = userPreference.getSession().first().token
             if (token != "") {
@@ -68,8 +67,6 @@ class StoryRemoteViewsFactory(private val context: Context) :
             }
         }
 
-        val story = stories[position]
-        println("Binding story at position $position: $story")
         return views
     }
 
