@@ -14,13 +14,13 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
 import com.dicoding.picodiploma.storyapp.view.add.AddStoryActivity
 import com.dicoding.picodiploma.storyapp.view.welcome.WelcomeActivity
+import com.dicoding.picodiploma.storyapp.widget.StoryWidget
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -84,8 +84,10 @@ class MainActivity : AppCompatActivity() {
                     is Result.Success -> {
                         Log.d("SUCCESS", "Success")
                         binding.progressBar.visibility = View.GONE
-                        val newsData = result.data
-                        storyAdapter.submitList(newsData)
+                        val stories = result.data
+                        Log.d("Stories Data", "Story Data: $stories")
+                        StoryWidget.notifyDataSetChanged(this)
+                        storyAdapter.submitList(stories)
                         binding.rvStoryList.apply {
                             layoutManager = GridLayoutManager(context, 2)
                             setHasFixedSize(true)
@@ -128,6 +130,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.logout -> {
                 viewModel.logout()
+                StoryWidget.notifyDataSetChanged(this)
             }
         }
         return super.onOptionsItemSelected(item)

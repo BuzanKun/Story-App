@@ -1,6 +1,5 @@
 package com.dicoding.picodiploma.storyapp.data.repository
 
-import android.util.Log
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.data.local.pref.UserModel
 import com.dicoding.picodiploma.storyapp.data.local.pref.UserPreference

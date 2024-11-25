@@ -39,4 +39,4 @@ data class ListStoryItem(
 
     @field:SerializedName("id")
     val id: String? = null
-): Parcelable
+) : Parcelable
