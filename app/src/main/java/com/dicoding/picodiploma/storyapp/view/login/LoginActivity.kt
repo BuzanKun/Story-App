@@ -82,11 +82,10 @@ class LoginActivity : AppCompatActivity() {
                         .setTitle(getString(R.string.success))
                         .setMessage(getString(R.string.login_success))
                         .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                            val intent = Intent(this, MainActivity::class.java)
-                            intent.flags =
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                            finish()
+                            navigateToMainActivity()
+                        }
+                        .setOnDismissListener {
+                            navigateToMainActivity()
                         }
                         .create()
                         .show()
@@ -145,4 +144,10 @@ class LoginActivity : AppCompatActivity() {
         }.start()
     }
 
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
+    }
 }

@@ -58,6 +58,9 @@ class SignupActivity : AppCompatActivity() {
                         .setPositiveButton(getString(R.string.ok)) { _, _ ->
                             finish()
                         }
+                        .setOnDismissListener {
+                            finish()
+                        }
                         .create()
                         .show()
                 }

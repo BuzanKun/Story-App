@@ -140,11 +140,10 @@ class AddStoryActivity : AppCompatActivity() {
                         .setTitle(getString(R.string.success))
                         .setMessage(getString(R.string.upload_success))
                         .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                            val intent = Intent(this, MainActivity::class.java)
-                            intent.flags =
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                            finish()
+                            navigateToMainActivity()
+                        }
+                        .setOnDismissListener {
+                            navigateToMainActivity()
                         }
                         .create()
                         .show()
@@ -167,5 +166,12 @@ class AddStoryActivity : AppCompatActivity() {
         viewModel.isLoading.observe(this) { isLoading ->
             binding?.progressBar!!.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
+    }
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
     }
 }
