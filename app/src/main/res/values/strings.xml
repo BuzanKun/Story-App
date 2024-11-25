@@ -51,4 +51,5 @@
     <string name="empty">Empty</string>
     <string name="widget_image">Widget Image</string>
     <string name="refresh">Refresh</string>
+    <string name="change_language">Change Language</string>
 </resources>
