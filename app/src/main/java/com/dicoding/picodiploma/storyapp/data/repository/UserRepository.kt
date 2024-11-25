@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.storyapp.data.repository
 
+import android.util.Log
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.data.local.pref.UserModel
 import com.dicoding.picodiploma.storyapp.data.local.pref.UserPreference
@@ -71,14 +72,8 @@ class UserRepository private constructor(
     }
 
     companion object {
-        @Volatile
-        private var instance: UserRepository? = null
         fun getInstance(
-            apiService: ApiService,
-            userPreference: UserPreference
-        ): UserRepository =
-            instance ?: synchronized(this) {
-                instance ?: UserRepository(apiService, userPreference)
-            }.also { instance = it }
+            apiService: ApiService, userPreference: UserPreference
+        ): UserRepository = UserRepository(apiService, userPreference)
     }
 }
