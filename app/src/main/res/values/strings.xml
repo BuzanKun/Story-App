@@ -19,8 +19,6 @@
     <string name="error_email_invalid">Invalid email format</string>
     <string name="error_password_invalid">Password must be at least 8 characters</string>
     <string name="story_image">Story Image</string>
-    <string name="story_username">Username: %1$s</string>
-    <string name="story_description">Description: %1$s</string>
     <string name="add_a_new_story">Add a New Story</string>
     <string name="name_of_the_user">Name of the User</string>
     <string name="username">Username :</string>

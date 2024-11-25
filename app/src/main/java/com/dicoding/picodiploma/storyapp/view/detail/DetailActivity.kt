@@ -1,7 +1,10 @@
 package com.dicoding.picodiploma.storyapp.view.detail
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +31,7 @@ class DetailActivity : AppCompatActivity() {
 
         setupView()
         displayStoryDetails()
+        setupAnimation()
     }
 
     private fun setupView() {
@@ -49,9 +53,38 @@ class DetailActivity : AppCompatActivity() {
                 Glide.with(this@DetailActivity)
                     .load(it.photoUrl)
                     .into(ivDetailPhoto)
-                tvDetailName.text = it.name
-                tvDetailDescription.text = it.description
+                tvDetailName.setText(it.name)
+                tvDetailDescription.setText(it.description)
             }
         }
+    }
+
+    private fun setupAnimation() {
+        val image = ObjectAnimator.ofFloat(binding.ivDetailPhoto, View.ALPHA, 1f).setDuration(150)
+        val nameTitle =
+            ObjectAnimator.ofFloat(binding.tvDetailNameTitle, View.ALPHA, 1f).setDuration(150)
+        val descriptionTitle =
+            ObjectAnimator.ofFloat(binding.tvDetailDescriptionTitle, View.ALPHA, 1f)
+                .setDuration(150)
+        val nameLayout =
+            ObjectAnimator.ofFloat(binding.tilDetailName, View.ALPHA, 1f).setDuration(150)
+        val descriptionLayout =
+            ObjectAnimator.ofFloat(binding.tilDetailDescription, View.ALPHA, 1f).setDuration(150)
+        val name = ObjectAnimator.ofFloat(binding.tvDetailName, View.ALPHA, 1f).setDuration(150)
+        val description =
+            ObjectAnimator.ofFloat(binding.tvDetailDescription, View.ALPHA, 1f).setDuration(150)
+
+        AnimatorSet().apply {
+            playSequentially(
+                image,
+                nameTitle,
+                nameLayout,
+                descriptionTitle,
+                descriptionLayout,
+                name,
+                description
+            )
+            startDelay = 150
+        }.start()
     }
 }
