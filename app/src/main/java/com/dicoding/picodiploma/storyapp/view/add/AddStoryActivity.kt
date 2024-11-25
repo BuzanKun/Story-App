@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivityAddStoryBinding
@@ -90,6 +91,10 @@ class AddStoryActivity : AppCompatActivity() {
         binding?.btnCamera?.setOnClickListener {
             currentImageUri = getImageUri(this)
             intentCamera.launch(currentImageUri!!)
+        }
+
+        binding?.edAddDescription?.addTextChangedListener {
+            binding?.buttonAdd?.isEnabled = true
         }
 
         binding?.buttonAdd?.setOnClickListener {
