@@ -14,9 +14,9 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.storyapp.R
-import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
 import com.dicoding.picodiploma.storyapp.view.add.AddStoryActivity
@@ -36,14 +36,19 @@ class MainActivity : AppCompatActivity() {
     }
     private val storyAdapter = StoryAdapter()
 
+    private var errorSnackbar: Snackbar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.myToolbar)
 
+        binding.rvStoryList.layoutManager = LinearLayoutManager(this)
+
         setupView()
-        setupObserve()
+        setupSession()
+        loadData()
         setupAction()
     }
 
@@ -59,57 +64,69 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupObserve() {
+    private fun setupSession() {
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             }
         }
+    }
 
-        viewModel.getStories().observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is Result.Loading -> {
-                        Log.d(" Loading", "Loading")
-                        binding.progressBar.visibility = View.VISIBLE
-                        var progress = 0
-                        val handler = Handler(Looper.getMainLooper())
-                        handler.postDelayed(object : Runnable {
-                            override fun run() {
-                                progress += 10
-                                if (progress <= 100) {
-                                    binding.progressBar.progress = progress
-                                    handler.postDelayed(this, 100) // Update every 300ms
-                                }
+    private fun loadData() {
+        viewModel.stories.observe(this) {
+            storyAdapter.submitData(lifecycle, it)
+        }
+
+        storyAdapter.addLoadStateListener { loadState ->
+            Log.d("LoadState", "Current state: $loadState")
+            when (loadState.refresh) { // For initial load
+                is LoadState.Loading -> {
+                    Log.d(" Loading", "Loading")
+                    binding.progressBar.visibility = View.VISIBLE
+                    var progress = 0
+                    val handler = Handler(Looper.getMainLooper())
+                    handler.postDelayed(object : Runnable {
+                        override fun run() {
+                            progress += 10
+                            if (progress <= 100) {
+                                binding.progressBar.progress = progress
+                                handler.postDelayed(this, 100) // Update every 300ms
                             }
-                        }, 100)
-                    }
-
-                    is Result.Success -> {
-                        Log.d("SUCCESS", "Success")
-                        binding.progressBar.visibility = View.GONE
-                        val stories = result.data
-                        Log.d("Stories Data", "Story Data: $stories")
-                        StoryWidget.notifyDataSetChanged(this)
-                        storyAdapter.submitList(stories)
-                        binding.rvStoryList.apply {
-                            layoutManager = GridLayoutManager(context, 2)
-                            setHasFixedSize(true)
-                            adapter = storyAdapter
                         }
-                    }
+                    }, 100)
+                    errorSnackbar?.dismiss()
+                }
 
-                    is Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        Snackbar.make(
+                is LoadState.NotLoading -> {
+                    Log.d("SUCCESS", "Success")
+                    binding.progressBar.visibility = View.GONE
+                    errorSnackbar?.dismiss()
+                }
+
+                is LoadState.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    val error = (loadState.refresh as LoadState.Error).error
+                    if (errorSnackbar == null || errorSnackbar!!.isShown) {
+                        errorSnackbar = Snackbar.make(
                             binding.root,
-                            getString(R.string.error_occurred, result.error),
-                            Snackbar.LENGTH_SHORT
-                        ).setAction(getString(R.string.dismiss)) {
-                        }.show()
+                            getString(R.string.error_occurred, error.localizedMessage),
+                            Snackbar.LENGTH_INDEFINITE
+                        ).setAction(getString(R.string.retry)) {
+                            storyAdapter.retry()
+                        }
+                        errorSnackbar?.show()
                     }
                 }
+            }
+        }
+
+        if (binding.rvStoryList.adapter == null) {
+            binding.rvStoryList.apply {
+                layoutManager = LinearLayoutManager(this@MainActivity)
+                adapter = storyAdapter.withLoadStateFooter(
+                    footer = LoadingStateAdapter { storyAdapter.retry() }
+                )
             }
         }
     }
@@ -121,7 +138,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.swipeRefresh.setOnRefreshListener {
-            setupObserve()
+            storyAdapter.refresh()
+            loadData()
             binding.swipeRefresh.isRefreshing = false
         }
     }

@@ -3,11 +3,16 @@ package com.dicoding.picodiploma.storyapp.data.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.data.remote.response.ErrorResponse
 import com.dicoding.picodiploma.storyapp.data.remote.response.ListStoryItem
 import com.dicoding.picodiploma.storyapp.data.remote.response.UploadResponse
 import com.dicoding.picodiploma.storyapp.data.remote.retrofit.ApiService
+import com.dicoding.picodiploma.storyapp.view.main.StoryPagingSource
 import com.google.gson.Gson
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -16,16 +21,16 @@ import retrofit2.HttpException
 class StoryRepository private constructor(
     private val apiService: ApiService
 ) {
-    fun getStories(): LiveData<Result<List<ListStoryItem>>> = liveData {
-        emit(Result.Loading)
-        try {
-            val response = apiService.getStories()
-            val storiesData = response.listStory
-            emit(Result.Success(storiesData))
-        } catch (e: Exception) {
-            Log.e("StoryRepository", "getStories: ${e.message.toString()}")
-            emit(Result.Error(e.message.toString()))
-        }
+    fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 4,
+                initialLoadSize = 8
+            ),
+            pagingSourceFactory = {
+                StoryPagingSource(apiService)
+            }
+        ).liveData
     }
 
     fun getStoriesWithLocation(): LiveData<Result<List<ListStoryItem>>> = liveData {

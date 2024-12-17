@@ -3,15 +3,15 @@ package com.dicoding.picodiploma.storyapp.view.main
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.picodiploma.storyapp.data.remote.response.ListStoryItem
 import com.dicoding.picodiploma.storyapp.databinding.StoryRowBinding
 import com.dicoding.picodiploma.storyapp.view.detail.DetailActivity
 
-class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(private val binding: StoryRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(story: ListStoryItem) {
@@ -36,7 +36,9 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val story = getItem(position)
-        holder.bind(story)
+        story?.let {
+            holder.bind(it)
+        }
     }
 
     companion object {
