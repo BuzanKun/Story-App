@@ -53,4 +53,5 @@
     <string name="widget_image">Gambar Widget</string>
     <string name="refresh">Muat Ulang</string>
     <string name="change_language">Ganti Bahasa</string>
+    <string name="map">Peta</string>
 </resources>

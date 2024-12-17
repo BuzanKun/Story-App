@@ -1,18 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="4dp"
     android:background="@drawable/widget_item_background"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <ImageView
         android:id="@+id/iv_widget_photo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:scaleType="centerCrop"
         android:contentDescription="@string/widget_image"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_place_holder" />
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:text="@string/app_widget_description"
         android:textColor="@color/white"
-        android:textSize="14sp"
-        android:text="@string/app_widget_description" />
+        android:textSize="14sp" />
 </LinearLayout>

@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-parcelize")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -18,6 +19,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/v1/\"")
+
+        manifestPlaceholders["MAPS_API_KEY"] = "AIzaSyCk1ta__5JS7iJvYSMmeal9N2UBYkIxYas"
     }
 
     buildTypes {
@@ -54,6 +57,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.2.0")
     implementation("androidx.activity:activity-ktx:1.9.3")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
 
     //App Testing
     testImplementation("junit:junit:4.13.2")

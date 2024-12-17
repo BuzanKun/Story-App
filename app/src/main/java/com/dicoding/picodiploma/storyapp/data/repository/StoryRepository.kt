@@ -28,6 +28,18 @@ class StoryRepository private constructor(
         }
     }
 
+    fun getStoriesWithLocation(): LiveData<Result<List<ListStoryItem>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getStoriesWithLocation()
+            val storiesData = response.listStory
+            emit(Result.Success(storiesData))
+        } catch (e: Exception) {
+            Log.e("StoryRepository", "getStoriesWithLocation: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
     suspend fun uploadStory(
         multipartBody: MultipartBody.Part,
         requestBody: RequestBody

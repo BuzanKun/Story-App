@@ -6,9 +6,9 @@
     android:initialLayout="@layout/story_widget"
     android:minWidth="250dp"
     android:minHeight="110dp"
-    android:updatePeriodMillis="0"
     android:previewLayout="@layout/story_widget"
     android:targetCellWidth="4"
     android:targetCellHeight="3"
+    android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"
     tools:targetApi="s" />

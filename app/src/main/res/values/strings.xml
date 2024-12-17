@@ -52,4 +52,6 @@
     <string name="widget_image">Widget Image</string>
     <string name="refresh">Refresh</string>
     <string name="change_language">Change Language</string>
+    <string name="title_activity_story_maps" translatable="false">StoryMapsActivity</string>
+    <string name="map">Map</string>
 </resources>

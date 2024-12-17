@@ -20,12 +20,14 @@ import com.dicoding.picodiploma.storyapp.data.Result
 import com.dicoding.picodiploma.storyapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
 import com.dicoding.picodiploma.storyapp.view.add.AddStoryActivity
+import com.dicoding.picodiploma.storyapp.view.storymaps.StoryMapsActivity
 import com.dicoding.picodiploma.storyapp.view.welcome.WelcomeActivity
 import com.dicoding.picodiploma.storyapp.widget.StoryWidget
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     private val factory by lazy {
         ViewModelFactory.getInstance(this)
     }
@@ -33,10 +35,12 @@ class MainActivity : AppCompatActivity() {
         factory
     }
     private val storyAdapter = StoryAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.myToolbar)
 
         setupView()
         setupObserve()
@@ -129,9 +133,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_map -> {
+                startActivity(Intent(this, StoryMapsActivity::class.java))
+            }
+
             R.id.action_language -> {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             }
+
             R.id.action_logout -> {
                 viewModel.logout()
                 StoryWidget.notifyDataSetChanged(this)

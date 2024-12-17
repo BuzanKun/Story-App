@@ -11,70 +11,70 @@
     android:layout_marginBottom="4dp"
     card_view:cardCornerRadius="6dp">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        card_view:layout_constraintTop_toBottomOf="@+id/iv_item_photo">
+
+        <ImageView
+            android:id="@+id/iv_item_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            card_view:layout_constraintTop_toBottomOf="@+id/iv_item_photo"
-            android:orientation="vertical">
+            android:contentDescription="@string/story_image"
+            android:scaleType="fitCenter"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
 
-            <ImageView
-                android:id="@+id/iv_item_photo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/story_image"
-                android:scaleType="fitCenter"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp" />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:text="@string/username"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="@string/username"/>
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="2"
+            android:background="@drawable/widget_background"
+            android:padding="4dp"
+            android:text="@string/name_of_the_user"
+            android:transitionName="storyName" />
 
-            <TextView
-                android:id="@+id/tv_item_name"
-                android:transitionName="storyName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/widget_background"
-                android:layout_weight="2"
-                android:padding="4dp"
-                android:text="@string/name_of_the_user"/>
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp" />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:text="@string/description"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="4dp"
-                android:textStyle="bold"
-                android:text="@string/description"/>
-
-            <TextView
-                android:id="@+id/tv_item_description"
-                android:transitionName="storyDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="2"
-                android:background="@drawable/widget_background"
-                android:padding="4dp"
-                android:text="@string/description_of_the_story"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_item_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="2"
+            android:background="@drawable/widget_background"
+            android:padding="4dp"
+            android:text="@string/description_of_the_story"
+            android:transitionName="storyDescription" />
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -10,6 +10,7 @@ import com.dicoding.picodiploma.storyapp.view.add.AddStoryViewModel
 import com.dicoding.picodiploma.storyapp.view.login.LoginViewModel
 import com.dicoding.picodiploma.storyapp.view.main.MainViewModel
 import com.dicoding.picodiploma.storyapp.view.signup.SignUpViewModel
+import com.dicoding.picodiploma.storyapp.view.storymaps.StoryMapsViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository,
@@ -22,6 +23,10 @@ class ViewModelFactory(
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(userRepository, storyRepository) as T
+            }
+
+            modelClass.isAssignableFrom(StoryMapsViewModel::class.java) -> {
+                StoryMapsViewModel(storyRepository) as T
             }
 
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
