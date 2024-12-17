@@ -3,32 +3,37 @@ package com.dicoding.picodiploma.storyapp.data.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.dicoding.picodiploma.storyapp.data.Result
+import com.dicoding.picodiploma.storyapp.data.StoryRemoteMediator
+import com.dicoding.picodiploma.storyapp.data.local.database.StoryDatabase
 import com.dicoding.picodiploma.storyapp.data.remote.response.ErrorResponse
 import com.dicoding.picodiploma.storyapp.data.remote.response.ListStoryItem
 import com.dicoding.picodiploma.storyapp.data.remote.response.UploadResponse
 import com.dicoding.picodiploma.storyapp.data.remote.retrofit.ApiService
-import com.dicoding.picodiploma.storyapp.view.main.StoryPagingSource
 import com.google.gson.Gson
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.HttpException
 
 class StoryRepository private constructor(
+    private val storyDatabase: StoryDatabase,
     private val apiService: ApiService
 ) {
     fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
                 pageSize = 4,
                 initialLoadSize = 8
             ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
             pagingSourceFactory = {
-                StoryPagingSource(apiService)
+                storyDatabase.storyDao().getAllStories()
             }
         ).liveData
     }
@@ -63,7 +68,8 @@ class StoryRepository private constructor(
 
     companion object {
         fun getInstance(
+            storyDatabase: StoryDatabase,
             apiService: ApiService
-        ): StoryRepository = StoryRepository(apiService)
+        ): StoryRepository = StoryRepository(storyDatabase, apiService)
     }
 }

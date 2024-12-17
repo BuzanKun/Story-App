@@ -1,6 +1,7 @@
 package com.dicoding.picodiploma.storyapp.di
 
 import android.content.Context
+import com.dicoding.picodiploma.storyapp.data.local.database.StoryDatabase
 import com.dicoding.picodiploma.storyapp.data.local.pref.UserPreference
 import com.dicoding.picodiploma.storyapp.data.local.pref.dataStore
 import com.dicoding.picodiploma.storyapp.data.remote.retrofit.ApiConfig
@@ -15,9 +16,10 @@ object Injection {
         val userPref = UserPreference.getInstance(context.dataStore)
         val user = runBlocking { userPref.getSession().first() }
         val apiService = ApiConfig.getApiService(user.token)
+        val storyDatabase = StoryDatabase.getInstance(context)
 
         val userRepository = UserRepository.getInstance(apiService, userPref)
-        val storyRepository = StoryRepository.getInstance(apiService)
+        val storyRepository = StoryRepository.getInstance(storyDatabase, apiService)
         return Pair(userRepository, storyRepository)
     }
 
