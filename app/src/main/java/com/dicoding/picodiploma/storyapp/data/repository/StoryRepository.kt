@@ -52,10 +52,12 @@ class StoryRepository private constructor(
 
     suspend fun uploadStory(
         multipartBody: MultipartBody.Part,
-        requestBody: RequestBody
+        requestBody: RequestBody,
+        lat: Float?,
+        lon: Float?
     ): Result<UploadResponse> {
         return try {
-            val response = apiService.uploadStory(multipartBody, requestBody)
+            val response = apiService.uploadStory(multipartBody, requestBody, lat, lon)
             Result.Success(response)
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()

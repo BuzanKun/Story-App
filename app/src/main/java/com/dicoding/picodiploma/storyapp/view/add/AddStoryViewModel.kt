@@ -18,12 +18,18 @@ class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
     private val _uploadStatus = MutableLiveData<Result<UploadResponse>>()
     val uploadStatus: LiveData<Result<UploadResponse>> get() = _uploadStatus
 
-    fun uploadStory(multipartBody: MultipartBody.Part, requestBody: RequestBody) {
+    fun uploadStory(
+        multipartBody: MultipartBody.Part, requestBody: RequestBody,
+        lat: Float?,
+        lon: Float?
+    ) {
         _isLoading.value = true
         viewModelScope.launch {
             val result = repository.uploadStory(
                 multipartBody,
-                requestBody
+                requestBody,
+                lat,
+                lon
             )
             _isLoading.value = false
             _uploadStatus.value = result

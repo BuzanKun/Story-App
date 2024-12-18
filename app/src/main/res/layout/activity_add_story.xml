@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_add">
+        app:layout_constraintBottom_toTopOf="@+id/switch_location">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_add_description"
@@ -62,6 +62,58 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="@string/description" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switch_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:padding="4dp"
+        android:text="@string/add_location_optional"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/til_latitude" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_latitude"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="4dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toTopOf="@+id/button_add"
+        app:layout_constraintEnd_toStartOf="@+id/til_longitude"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:hint="@string/latitude" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_longitude"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="12dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toTopOf="@+id/button_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/til_latitude">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:hint="@string/longitude" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

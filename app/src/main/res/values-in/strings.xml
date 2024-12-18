@@ -54,4 +54,5 @@
     <string name="refresh">Muat Ulang</string>
     <string name="change_language">Ganti Bahasa</string>
     <string name="map">Peta</string>
+    <string name="add_location_optional">Tambahkan Lokasi (Opsional)</string>
 </resources>

@@ -1,9 +1,12 @@
 package com.dicoding.picodiploma.storyapp.view.add
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
@@ -13,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.Result
@@ -22,6 +26,8 @@ import com.dicoding.picodiploma.storyapp.utils.reduceFileImage
 import com.dicoding.picodiploma.storyapp.utils.uriToFile
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
 import com.dicoding.picodiploma.storyapp.view.main.MainActivity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -39,6 +45,9 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     private var currentImageUri: Uri? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var locationLat: Float? = null
+    private var locationLon: Float? = null
 
     private val pickImage =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -65,6 +74,12 @@ class AddStoryActivity : AppCompatActivity() {
         _binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        binding?.apply {
+            edLatitude.keyListener = null
+            edLongitude.keyListener = null
+        }
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         setupView()
         setupAction()
         setupObservers()
@@ -84,25 +99,92 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding?.btnGallery?.setOnClickListener {
-            pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-        }
-
-        binding?.btnCamera?.setOnClickListener {
-            currentImageUri = getImageUri(this)
-            intentCamera.launch(currentImageUri!!)
-        }
-
-        binding?.edAddDescription?.addTextChangedListener {
-            binding?.buttonAdd?.isEnabled = true
-        }
-
-        binding?.buttonAdd?.setOnClickListener {
-            uploadStory()
+        binding?.apply {
+            btnGallery.setOnClickListener {
+                pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
+            btnCamera.setOnClickListener {
+                currentImageUri = getImageUri(this@AddStoryActivity)
+                intentCamera.launch(currentImageUri!!)
+            }
+            edAddDescription.addTextChangedListener {
+                binding?.buttonAdd?.isEnabled = true
+            }
+            buttonAdd.setOnClickListener {
+                uploadStory(locationLat, locationLon)
+                binding?.buttonAdd?.isEnabled = false
+            }
+            switchLocation.setOnCheckedChangeListener { _, isChecked: Boolean ->
+                if (isChecked) {
+                    getMyCurrentLocation()
+                } else {
+                    tilLatitude.isEnabled = false
+                    tilLongitude.isEnabled = false
+                    locationLon = null
+                    locationLat = null
+                    binding.apply {
+                        edLatitude.text = null
+                        edLongitude.text = null
+                    }
+                }
+            }
         }
     }
 
-    private fun uploadStory() {
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    getMyCurrentLocation()
+                }
+
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    getMyCurrentLocation()
+                }
+
+                else -> {
+                }
+            }
+        }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getMyCurrentLocation() {
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                location?.let {
+                    locationLat = location.latitude.toFloat()
+                    locationLon = location.longitude.toFloat()
+                    binding?.apply {
+                        tilLatitude.isEnabled = true
+                        tilLongitude.isEnabled = true
+                        edLatitude.text = Editable.Factory.getInstance().newEditable("$locationLat")
+                        edLongitude.text =
+                            Editable.Factory.getInstance().newEditable("$locationLon")
+                    }
+                }
+            }
+        } else {
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
+
+    private fun uploadStory(lat: Float? = null, lon: Float? = null) {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
             Log.d(getString(R.string.image_file), getString(R.string.showimage, imageFile.path))
@@ -115,8 +197,7 @@ class AddStoryActivity : AppCompatActivity() {
                 imageFile.name,
                 requestImageFile
             )
-
-            viewModel.uploadStory(multipartBody, requestBody)
+            viewModel.uploadStory(multipartBody, requestBody, lat, lon)
         } ?: showImageNull(getString(R.string.image_null_error))
     }
 

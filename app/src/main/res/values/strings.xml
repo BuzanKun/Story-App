@@ -54,4 +54,7 @@
     <string name="change_language">Change Language</string>
     <string name="title_activity_story_maps" translatable="false">StoryMapsActivity</string>
     <string name="map">Map</string>
+    <string name="add_location_optional">Add Location (Optional)</string>
+    <string name="latitude" translatable="false">Latitude :</string>
+    <string name="longitude" translatable="false">Longitude :</string>
 </resources>
