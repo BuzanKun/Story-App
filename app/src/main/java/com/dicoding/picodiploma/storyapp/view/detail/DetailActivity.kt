@@ -55,6 +55,8 @@ class DetailActivity : AppCompatActivity() {
                     .into(ivDetailPhoto)
                 tvDetailName.setText(it.name)
                 tvDetailDescription.setText(it.description)
+                edLatitude.setText(it.lat.toString())
+                edLongitude.setText(it.lon.toString())
             }
         }
     }
