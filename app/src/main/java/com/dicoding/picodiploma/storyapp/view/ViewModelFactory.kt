@@ -7,8 +7,8 @@ import com.dicoding.picodiploma.storyapp.data.repository.StoryRepository
 import com.dicoding.picodiploma.storyapp.data.repository.UserRepository
 import com.dicoding.picodiploma.storyapp.di.Injection
 import com.dicoding.picodiploma.storyapp.view.add.AddStoryViewModel
+import com.dicoding.picodiploma.storyapp.view.auth.AuthViewModel
 import com.dicoding.picodiploma.storyapp.view.login.LoginViewModel
-import com.dicoding.picodiploma.storyapp.view.main.AuthViewModel
 import com.dicoding.picodiploma.storyapp.view.main.MainViewModel
 import com.dicoding.picodiploma.storyapp.view.signup.SignUpViewModel
 import com.dicoding.picodiploma.storyapp.view.storymaps.StoryMapsViewModel

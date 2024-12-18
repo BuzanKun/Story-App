@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.storyapp.view.main
+package com.dicoding.picodiploma.storyapp.view.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

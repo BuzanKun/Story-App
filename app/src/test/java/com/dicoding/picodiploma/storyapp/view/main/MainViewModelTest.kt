@@ -45,7 +45,8 @@ class MainViewModelTest {
         Mockito.`when`(storyRepository.getStoriesWithRemoteMediator()).thenReturn(expectedStory)
 
         val mainViewModel = MainViewModel(storyRepository)
-        val actualStory: PagingData<ListStoryItem> = mainViewModel.storiesWithRemoteMediator.getOrAwaitValue()
+        val actualStory: PagingData<ListStoryItem> =
+            mainViewModel.storiesWithRemoteMediator.getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoryAdapter.DIFF_CALLBACK,
@@ -67,7 +68,8 @@ class MainViewModelTest {
         Mockito.`when`(storyRepository.getStoriesWithRemoteMediator()).thenReturn(expectedStory)
 
         val mainViewModel = MainViewModel(storyRepository)
-        val actualStory: PagingData<ListStoryItem> = mainViewModel.storiesWithRemoteMediator.getOrAwaitValue()
+        val actualStory: PagingData<ListStoryItem> =
+            mainViewModel.storiesWithRemoteMediator.getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoryAdapter.DIFF_CALLBACK,

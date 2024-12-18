@@ -28,6 +28,9 @@ android {
             setProguardFiles(listOf(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"))
         }
     }
+    testOptions {
+        animationsDisabled = true
+    }
     tasks.withType<Test> {
         jvmArgs("-XX:+EnableDynamicAgentLoading")
         jvmArgs("-Dnet.bytebuddy.experimental=true")
@@ -65,6 +68,8 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:3.3.5")
     implementation("androidx.test.ext:junit-ktx:1.2.1")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("androidx.test.espresso:espresso-intents:3.6.1")
+    implementation("androidx.activity:activity-ktx:1.9.3")
     testImplementation("junit:junit:4.13.2")
 
     //App Testing
@@ -77,6 +82,8 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+    androidTestImplementation("com.squareup.okhttp3:okhttp-tls:4.9.3")
 
     //Lifecycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")

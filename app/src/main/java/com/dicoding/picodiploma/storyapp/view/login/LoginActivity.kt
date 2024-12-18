@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             val email = emailField.getInput()
             val password = passwordField.getInput()
-
+            binding.loginButton.isEnabled = false
             viewModel.loginUser(email, password)
         }
     }
@@ -80,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginStatus.observe(this) { result ->
             when (result) {
                 is Result.Success -> {
+                    binding.loginButton.isEnabled = true
                     AlertDialog.Builder(this)
                         .setTitle(getString(R.string.success))
                         .setMessage(getString(R.string.login_success))
@@ -94,6 +95,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 is Result.Error -> {
+                    binding.loginButton.isEnabled = true
                     AlertDialog.Builder(this)
                         .setTitle(getString(R.string.failed))
                         .setMessage(result.error)

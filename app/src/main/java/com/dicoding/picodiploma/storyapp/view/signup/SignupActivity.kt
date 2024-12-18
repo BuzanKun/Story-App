@@ -54,6 +54,7 @@ class SignupActivity : AppCompatActivity() {
         viewModel.registerStatus.observe(this) { result ->
             when (result) {
                 is Result.Success -> {
+                    binding.signupButton.isEnabled = true
                     AlertDialog.Builder(this)
                         .setTitle(getString(R.string.success))
                         .setMessage(getString(R.string.registration_successful))
@@ -68,6 +69,7 @@ class SignupActivity : AppCompatActivity() {
                 }
 
                 is Result.Error -> {
+                    binding.signupButton.isEnabled = true
                     AlertDialog.Builder(this)
                         .setTitle(getString(R.string.failed))
                         .setMessage(result.error)
@@ -107,7 +109,7 @@ class SignupActivity : AppCompatActivity() {
             val name = binding.edRegisterName.text.toString()
             val email = binding.edRegisterEmail.getInput()
             val password = binding.edRegisterPassword.getInput()
-
+            binding.signupButton.isEnabled = false
             viewModel.registerUser(name, email, password)
         }
     }

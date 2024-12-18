@@ -15,6 +15,7 @@ import com.dicoding.picodiploma.storyapp.data.remote.response.ErrorResponse
 import com.dicoding.picodiploma.storyapp.data.remote.response.ListStoryItem
 import com.dicoding.picodiploma.storyapp.data.remote.response.UploadResponse
 import com.dicoding.picodiploma.storyapp.data.remote.retrofit.ApiService
+import com.dicoding.picodiploma.storyapp.utils.wrapEspressoIdlingResource
 import com.google.gson.Gson
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -56,15 +57,17 @@ class StoryRepository private constructor(
         lat: Float?,
         lon: Float?
     ): Result<UploadResponse> {
-        return try {
-            val response = apiService.uploadStory(multipartBody, requestBody, lat, lon)
-            Result.Success(response)
-        } catch (e: HttpException) {
-            val jsonInString = e.response()?.errorBody()?.string()
-            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
-            Result.Error(errorBody.message ?: "Unknown Error Occurred")
-        } catch (e: Exception) {
-            Result.Error(e.message ?: "Unknown Error Occurred")
+        wrapEspressoIdlingResource {
+            return try {
+                val response = apiService.uploadStory(multipartBody, requestBody, lat, lon)
+                Result.Success(response)
+            } catch (e: HttpException) {
+                val jsonInString = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+                Result.Error(errorBody.message ?: "Unknown Error Occurred")
+            } catch (e: Exception) {
+                Result.Error(e.message ?: "Unknown Error Occurred")
+            }
         }
     }
 

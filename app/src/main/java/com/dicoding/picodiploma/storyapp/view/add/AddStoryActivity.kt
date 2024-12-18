@@ -113,6 +113,8 @@ class AddStoryActivity : AppCompatActivity() {
             buttonAdd.setOnClickListener {
                 uploadStory(locationLat, locationLon)
                 binding?.buttonAdd?.isEnabled = false
+                binding?.btnGallery?.isEnabled = false
+                binding?.btnCamera?.isEnabled = false
             }
             switchLocation.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 if (isChecked) {
@@ -236,6 +238,9 @@ class AddStoryActivity : AppCompatActivity() {
                 }
 
                 is Result.Error -> {
+                    binding?.buttonAdd?.isEnabled = true
+                    binding?.btnGallery?.isEnabled = true
+                    binding?.btnCamera?.isEnabled = true
                     AlertDialog.Builder(this)
                         .setTitle(getString(R.string.failed))
                         .setMessage(result.error)

@@ -20,8 +20,9 @@ import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
 import com.dicoding.picodiploma.storyapp.view.add.AddStoryActivity
+import com.dicoding.picodiploma.storyapp.view.auth.AuthActivity
+import com.dicoding.picodiploma.storyapp.view.auth.AuthViewModel
 import com.dicoding.picodiploma.storyapp.view.storymaps.StoryMapsActivity
-import com.dicoding.picodiploma.storyapp.view.welcome.WelcomeActivity
 import com.dicoding.picodiploma.storyapp.widget.StoryWidget
 import com.google.android.material.snackbar.Snackbar
 
@@ -50,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         binding.rvStoryList.layoutManager = LinearLayoutManager(this)
 
         setupView()
-        setupSession()
         loadData()
         setupAction()
     }
@@ -64,15 +64,6 @@ class MainActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
-        }
-    }
-
-    private fun setupSession() {
-        authViewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
-                startActivity(Intent(this, WelcomeActivity::class.java))
-                finish()
-            }
         }
     }
 
@@ -165,6 +156,8 @@ class MainActivity : AppCompatActivity() {
             R.id.action_logout -> {
                 authViewModel.logout()
                 StoryWidget.notifyDataSetChanged(this)
+                startActivity(Intent(this, AuthActivity::class.java))
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)

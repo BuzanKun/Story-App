@@ -8,5 +8,6 @@ import com.dicoding.picodiploma.storyapp.data.repository.StoryRepository
 class MainViewModel(
     storyRepository: StoryRepository
 ) : ViewModel() {
-    val storiesWithRemoteMediator = storyRepository.getStoriesWithRemoteMediator().cachedIn(viewModelScope)
+    val storiesWithRemoteMediator =
+        storyRepository.getStoriesWithRemoteMediator().cachedIn(viewModelScope)
 }
