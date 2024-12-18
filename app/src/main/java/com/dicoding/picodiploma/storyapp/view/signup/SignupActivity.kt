@@ -19,7 +19,9 @@ import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
 
-    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    private val factory: ViewModelFactory by lazy {
+        ViewModelFactory.getInstance(this)
+    }
     private val viewModel: SignUpViewModel by viewModels {
         factory
     }

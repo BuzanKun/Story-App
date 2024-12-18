@@ -24,7 +24,7 @@ class StoryRepository private constructor(
     private val storyDatabase: StoryDatabase,
     private val apiService: ApiService
 ) {
-    fun getStories(): LiveData<PagingData<ListStoryItem>> {
+    fun getStoriesWithRemoteMediator(): LiveData<PagingData<ListStoryItem>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(

@@ -31,7 +31,10 @@ class MainActivity : AppCompatActivity() {
     private val factory by lazy {
         ViewModelFactory.getInstance(this)
     }
-    private val viewModel: MainViewModel by viewModels {
+    private val mainViewModel: MainViewModel by viewModels {
+        factory
+    }
+    private val authViewModel: AuthViewModel by viewModels {
         factory
     }
     private val storyAdapter = StoryAdapter()
@@ -65,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupSession() {
-        viewModel.getSession().observe(this) { user ->
+        authViewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
@@ -74,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        viewModel.stories.observe(this) {
+        mainViewModel.storiesWithRemoteMediator.observe(this) {
             storyAdapter.submitData(lifecycle, it)
         }
 
@@ -160,7 +163,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.action_logout -> {
-                viewModel.logout()
+                authViewModel.logout()
                 StoryWidget.notifyDataSetChanged(this)
             }
         }

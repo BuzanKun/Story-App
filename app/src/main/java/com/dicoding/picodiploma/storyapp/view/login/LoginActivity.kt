@@ -19,7 +19,9 @@ import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
 import com.dicoding.picodiploma.storyapp.view.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
-    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    private val factory: ViewModelFactory by lazy {
+        ViewModelFactory.getInstance(this)
+    }
     private val viewModel: LoginViewModel by viewModels {
         factory
     }

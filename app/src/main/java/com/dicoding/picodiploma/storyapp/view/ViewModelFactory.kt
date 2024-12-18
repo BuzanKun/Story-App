@@ -8,6 +8,7 @@ import com.dicoding.picodiploma.storyapp.data.repository.UserRepository
 import com.dicoding.picodiploma.storyapp.di.Injection
 import com.dicoding.picodiploma.storyapp.view.add.AddStoryViewModel
 import com.dicoding.picodiploma.storyapp.view.login.LoginViewModel
+import com.dicoding.picodiploma.storyapp.view.main.AuthViewModel
 import com.dicoding.picodiploma.storyapp.view.main.MainViewModel
 import com.dicoding.picodiploma.storyapp.view.signup.SignUpViewModel
 import com.dicoding.picodiploma.storyapp.view.storymaps.StoryMapsViewModel
@@ -22,7 +23,11 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(userRepository, storyRepository) as T
+                MainViewModel(storyRepository) as T
+            }
+
+            modelClass.isAssignableFrom(AuthViewModel::class.java) -> {
+                AuthViewModel(userRepository) as T
             }
 
             modelClass.isAssignableFrom(StoryMapsViewModel::class.java) -> {
