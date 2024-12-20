@@ -215,6 +215,14 @@ class AddStoryActivity : AppCompatActivity() {
             .setTitle(getString(R.string.upload_error))
             .setMessage(message)
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                binding?.buttonAdd?.isEnabled = true
+                binding?.btnGallery?.isEnabled = true
+                binding?.btnCamera?.isEnabled = true
+            }
+            .setOnDismissListener {
+                binding?.buttonAdd?.isEnabled = true
+                binding?.btnGallery?.isEnabled = true
+                binding?.btnCamera?.isEnabled = true
             }
             .create()
             .show()
